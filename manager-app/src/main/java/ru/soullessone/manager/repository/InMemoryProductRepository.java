@@ -4,10 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.soullessone.manager.entity.Product;
 
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Repository
@@ -28,5 +25,12 @@ public class InMemoryProductRepository implements ProductRepository {
                 .orElse(0)+1);
         this.products.add(product);
         return product;
+    }
+
+    @Override
+    public Optional<Product> findById(Integer productId) {
+        return this.products.stream()
+                .filter(product -> Objects.equals(productId, product.getId()))
+                .findFirst();
     }
 }
